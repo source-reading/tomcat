@@ -143,12 +143,15 @@ public final class Bootstrap {
 
     private void initClassLoaders() {
         try {
+            // common classload, 根据 common.loader 加载, 默认就是当前classload
             commonLoader = createClassLoader("common", null);
             if( commonLoader == null ) {
                 // no config file, default to this loader - we might be in a 'single' env.
                 commonLoader=this.getClass().getClassLoader();
             }
+            // server classload, 如何配置 server.loader 为空，那么就默认 commonLoader
             catalinaLoader = createClassLoader("server", commonLoader);
+            // 同上
             sharedLoader = createClassLoader("shared", commonLoader);
         } catch (Throwable t) {
             handleThrowable(t);
@@ -160,15 +163,15 @@ public final class Bootstrap {
 
     private ClassLoader createClassLoader(String name, ClassLoader parent)
         throws Exception {
-
+        // 配置文件获取值
         String value = CatalinaProperties.getProperty(name + ".loader");
         if ((value == null) || (value.equals("")))
             return parent;
-
+        // 系统变量进行替换
         value = replace(value);
 
         List<Repository> repositories = new ArrayList<>();
-
+        // 解析路径
         String[] repositoryPaths = getPaths(value);
 
         for (String repository : repositoryPaths) {

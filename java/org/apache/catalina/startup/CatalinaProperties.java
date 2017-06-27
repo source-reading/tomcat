@@ -58,7 +58,6 @@ public class CatalinaProperties {
      * Load properties.
      */
     private static void loadProperties() {
-
         InputStream is = null;
         String fileName = "catalina.properties";
 
@@ -90,7 +89,7 @@ public class CatalinaProperties {
         if (is == null) {
             try {
                 is = CatalinaProperties.class.getResourceAsStream
-                    ("/org/apache/catalina/startup/catalina.properties");
+                        ("/org/apache/catalina/startup/catalina.properties");
             } catch (Throwable t) {
                 handleThrowable(t);
             }
