@@ -60,32 +60,23 @@ import org.apache.tomcat.util.res.StringManager;
  * @author Craig R. McClanahan
  */
 public final class StandardServer extends LifecycleMBeanBase implements Server {
-
     private static final Log log = LogFactory.getLog(StandardServer.class);
 
-
     // ------------------------------------------------------------ Constructor
-
-
     /**
      * Construct a default instance of this class.
      */
     public StandardServer() {
-
         super();
-
         globalNamingResources = new NamingResourcesImpl();
         globalNamingResources.setContainer(this);
-
         if (isUseNaming()) {
             namingContextListener = new NamingContextListener();
             addLifecycleListener(namingContextListener);
         } else {
             namingContextListener = null;
         }
-
     }
-
 
     // ----------------------------------------------------- Instance Variables
 
@@ -343,7 +334,6 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
      */
     @Override
     public void addService(Service service) {
-
         service.setServer(this);
 
         synchronized (servicesLock) {
@@ -363,7 +353,6 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
             // Report this property change to interested listeners
             support.firePropertyChange("service", null, service);
         }
-
     }
 
     public void stopAwait() {
@@ -758,7 +747,6 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
      */
     @Override
     protected void startInternal() throws LifecycleException {
-
         fireLifecycleEvent(CONFIGURE_START_EVENT, null);
         setState(LifecycleState.STARTING);
 

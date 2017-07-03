@@ -83,7 +83,7 @@ public class Catalina {
     /**
      * Use await.
      */
-    protected boolean await = false;
+    protected boolean await = false; // TODO
 
     /**
      * Pathname to the server configuration file.
@@ -101,7 +101,7 @@ public class Catalina {
     /**
      * The server component we are starting or stopping.
      */
-    protected Server server = null;
+    protected Server server = null; // TODO
 
 
     /**
@@ -253,7 +253,6 @@ public class Catalina {
      * @return the main configuration file
      */
     protected File configFile() {
-
         File file = new File(configFile);
         if (!file.isAbsolute()) {
             file = new File(Bootstrap.getCatalinaBase(), configFile);
@@ -503,7 +502,6 @@ public class Catalina {
      * Start a new server instance.
      */
     public void load() {
-
         long t1 = System.nanoTime();
 
         initDirs();
@@ -625,7 +623,6 @@ public class Catalina {
      * Load using arguments
      */
     public void load(String args[]) {
-
         try {
             if (arguments(args)) {
                 load();
@@ -640,18 +637,14 @@ public class Catalina {
      * Start a new server instance.
      */
     public void start() {
-
         if (getServer() == null) {
             load();
         }
-
         if (getServer() == null) {
             log.fatal("Cannot start server. Server instance is not configured.");
             return;
         }
-
         long t1 = System.nanoTime();
-
         // Start the new server
         try {
             getServer().start();
@@ -664,12 +657,10 @@ public class Catalina {
             }
             return;
         }
-
         long t2 = System.nanoTime();
         if(log.isInfoEnabled()) {
             log.info("Server startup in " + ((t2 - t1) / 1000000) + " ms");
         }
-
         // Register shutdown hook
         if (useShutdownHook) {
             if (shutdownHook == null) {

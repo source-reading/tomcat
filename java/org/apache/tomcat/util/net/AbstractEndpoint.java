@@ -601,7 +601,7 @@ public abstract class AbstractEndpoint<S,U> {
     /**
      * Handling of accepted sockets.
      */
-    private Handler<S> handler = null;
+    private Handler<S> handler = null; // TODO
     public void setHandler(Handler<S> handler ) { this.handler = handler; }
     public Handler<S> getHandler() { return handler; }
 

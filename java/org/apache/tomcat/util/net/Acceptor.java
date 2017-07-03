@@ -57,12 +57,9 @@ public class Acceptor<U> implements Runnable {
 
     @Override
     public void run() {
-
         int errorDelay = 0;
-
         // Loop until we receive a shutdown command
         while (endpoint.isRunning()) {
-
             // Loop if endpoint is paused
             while (endpoint.isPaused() && endpoint.isRunning()) {
                 state = AcceptorState.PAUSED;
@@ -92,6 +89,7 @@ public class Acceptor<U> implements Runnable {
                 try {
                     // Accept the next incoming connection from the server
                     // socket
+                    // 客户端连接
                     socket = endpoint.serverSocketAccept();
                 } catch (Exception ioe) {
                     // We didn't get a socket

@@ -130,7 +130,7 @@ public final class Bootstrap {
     /**
      * Daemon reference.
      */
-    private Object catalinaDaemon = null;
+    private Object catalinaDaemon = null; //
 
 
     ClassLoader commonLoader = null;
@@ -256,9 +256,8 @@ public final class Bootstrap {
      * @throws Exception Fatal initialization error
      */
     public void init() throws Exception {
-
         initClassLoaders();
-
+        // 设置线程的 classload
         Thread.currentThread().setContextClassLoader(catalinaLoader);
 
         SecurityClassLoad.securityClassLoad(catalinaLoader);
@@ -379,7 +378,6 @@ public final class Bootstrap {
      */
     public void stopServer()
         throws Exception {
-
         Method method =
             catalinaDaemon.getClass().getMethod("stopServer", (Class []) null);
         method.invoke(catalinaDaemon, (Object []) null);
@@ -394,7 +392,6 @@ public final class Bootstrap {
      */
     public void stopServer(String[] arguments)
         throws Exception {
-
         Object param[];
         Class<?> paramTypes[];
         if (arguments==null || arguments.length==0) {

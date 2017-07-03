@@ -79,12 +79,12 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
 
     // ----------------------------------------------------------------- Fields
 
-    private NioSelectorPool selectorPool = new NioSelectorPool();
+    private NioSelectorPool selectorPool = new NioSelectorPool(); // TODO
 
     /**
      * Server socket "pointer".
      */
-    private ServerSocketChannel serverSock = null;
+    private ServerSocketChannel serverSock = null; // 服务端信道
 
     /**
      *
@@ -94,12 +94,12 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
     /**
      * Cache for poller events
      */
-    private SynchronizedStack<PollerEvent> eventCache;
+    private SynchronizedStack<PollerEvent> eventCache;// TODO
 
     /**
      * Bytebuffer cache, each channel holds a set of buffers (two, except for SSL holds four)
      */
-    private SynchronizedStack<NioChannel> nioChannels;
+    private SynchronizedStack<NioChannel> nioChannels; // TODO
 
 
     // ------------------------------------------------------------- Properties
@@ -135,7 +135,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
     /**
      * Poller thread count.
      */
-    private int pollerThreadCount = Math.min(2,Runtime.getRuntime().availableProcessors());
+    private int pollerThreadCount = Math.min(2,Runtime.getRuntime().availableProcessors()); // TODO
     public void setPollerThreadCount(int pollerThreadCount) { this.pollerThreadCount = pollerThreadCount; }
     public int getPollerThreadCount() { return pollerThreadCount; }
 
@@ -145,7 +145,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
     /**
      * The socket pollers.
      */
-    private Poller[] pollers = null;
+    private Poller[] pollers = null; // TODO
     private AtomicInteger pollerRotater = new AtomicInteger(0);
     /**
      * Return an available poller in true round robin fashion.
@@ -199,6 +199,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
      */
     @Override
     public void bind() throws Exception {
+        // 初始化服务端 socket
         initServerSocket();
 
         // Initialize thread count defaults for acceptor, poller
@@ -223,8 +224,11 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
     protected void initServerSocket() throws Exception {
         serverSock = ServerSocketChannel.open();
         socketProperties.setProperties(serverSock.socket());
+        // 绑定的端口
         InetSocketAddress addr = (getAddress()!=null?new InetSocketAddress(getAddress(),getPort()):new InetSocketAddress(getPort()));
+        // 绑定端口
         serverSock.socket().bind(addr,getAcceptCount());
+        // 阻塞
         serverSock.configureBlocking(true); //mimic APR behavior
     }
 
@@ -234,7 +238,6 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
      */
     @Override
     public void startInternal() throws Exception {
-
         if (!running) {
             running = true;
             paused = false;

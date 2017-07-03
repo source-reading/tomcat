@@ -49,7 +49,6 @@ import org.apache.tomcat.util.res.StringManager;
  */
 
 public class StandardService extends LifecycleMBeanBase implements Service {
-
     private static final Log log = LogFactory.getLog(StandardService.class);
 
 
